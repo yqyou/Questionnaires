@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Q-12</title>
+    <script src="../jspsych/dist/jspsych.js"></script>
+    <script src="../jspsych/dist/plugin-survey.js"></script>
+    <link href="../jspsych/dist/jspsych.css" rel="stylesheet" type="text/css" />
+    <link href="../jspsych/dist/plugin-survey.css" rel="stylesheet" >
+
+    
+  </head>
+  <body></body>
+  <script>
+
+    // initialize jsPsych
+    var jsPsych = initJsPsych({
+        on_finish : function(){
+            var date = new Date().toLocaleDateString();
+            var subname=JSON.parse(jsPsych.data.get().json().slice(1,-1))['response']['name'];
+            jsPsych.data.get().localSave('json',subname+'-12-'+date+'.json');
+            location.replace("../main.html ") 
+            },
+      });
+
+    var questions = {
+    type: jsPsychSurvey,
+    pages: [
+
+    [
+        {type:'text',prompt:'姓名', name:'name',required: true },
+    {type: 'likert-table', 
+    prompt:'请仔细阅读每一条，并根据您最近一周的实际情况，即在最近的一周您是否存在下列描述的状况和频率，选择最适合您的答案',
+    statements:
+        [{prompt:'感觉紧张，焦虑或愤怒', name: '1'},
+        {prompt:'不能够停止或不能控制的担心', name: '2'},
+        {prompt:'过分担心很多事情 ', name: '3'},
+        {prompt:'难以放松', name: '4'},
+        {prompt:'感觉难以安静下来，坐不住', name: '5'},
+        {prompt:'容易烦恼或被激怒', name: '6'},
+        {prompt:'感到害怕，好像将有可怕的事情会发生', name: '7'},    ],
+    options:['完全不会','好几天','超过一周','几乎每天'],
+    name:'GAD',
+    required:true} 
+    ]
+    ],
+    button_label_finish:'提交',
+    button_label_back:'上一页',
+    button_label_next:'下一页',
+    required_error_text:"请填写问题"
+    };
+
+      jsPsych.run([questions]);
+
+</script>
+</html>

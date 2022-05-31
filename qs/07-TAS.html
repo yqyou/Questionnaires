@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Q-07</title>
+    <script src="../jspsych/dist/jspsych.js"></script>
+    <script src="../jspsych/dist/plugin-survey.js"></script>
+    <link href="../jspsych/dist/jspsych.css" rel="stylesheet" type="text/css" />
+    <link href="../jspsych/dist/plugin-survey.css" rel="stylesheet" >
+
+    
+  </head>
+  <body></body>
+  <script>
+
+    // initialize jsPsych
+    var jsPsych = initJsPsych({
+        on_finish : function(){
+            var date = new Date().toLocaleDateString();
+            var subname=JSON.parse(jsPsych.data.get().json().slice(1,-1))['response']['name'];
+            jsPsych.data.get().localSave('json',subname+'-07-'+date+'.json');
+            location.replace("../main.html ") 
+            },
+      });
+
+    var questions = {
+    type: jsPsychSurvey,
+    pages: [
+
+    [
+        {type:'text',prompt:'姓名', name:'name',required: true },
+    {type: 'likert-table', 
+      prompt:`您好，下面是对您日常情绪状况的描述，请您根据自己的真实情况而选择相应的选项。 `,
+      statements:
+          [{prompt:'1.我常常搞不清自己有什么样的内心感受', name: '1'},
+          {prompt:'2.我感到难以用恰当的词语来描述我的内心感受', name: '2'},
+          {prompt:'3.我有一些连医生也不能理解的感觉', name: '3'},
+          {prompt:'4.我能容易描述自己的内心感受', name: '4'},
+          {prompt:'5.我更喜欢分析问题而不只是对问题进行描述', name: '5'},
+          {prompt:'6.当我心理难受时，我不知道究竟是悲伤，害怕，还是愤怒', name: '6'},
+          {prompt:'7.我常常对我身体的一些感受感到莫名其妙', name: '7'},
+          {prompt:'8.我常常只注意到事情的发生，而忽略了其发生的原因', name: '8'},
+          {prompt:'9.我有一些自己难以识别的内心感受', name: '9'},
+          {prompt:'10.知道自己的情绪体验对我来说很重要', name: '10'},
+          {prompt:'11.我难以描述我对别人有何感受', name: '11'},
+          {prompt:'12.人家说我很少谈及自己的内心感受', name: '12'},
+          {prompt:'13.我不知道自己的内心活动', name: '13'},
+          {prompt:'14.我常常不知道我为何愤怒', name: '14'},
+          {prompt:'15.我更愿意与别人谈论他们的日常活动而不是他们的内心感受', name: '15'},
+          {prompt:'16.我宁愿看轻松的娱乐片而不愿看严肃的情节片', name: '16'},
+          {prompt:'17.即使是密友，我也难以表达我内心深处的感受', name: '17'},
+          {prompt:'18.我能感觉到与某人有亲切感，即使在我们沉默寡言之时', name: '18'},
+          {prompt:'19.我觉得反省自己内心的感受对于解决个人问题是有用的', name: '19'},
+          {prompt:'20.寻找电影或戏剧中隐藏的含义会使人从娱乐中分心', name: '20'} ],
+      options:['完全不同意','不同意','中立','同意','完全同意'], 
+      name:'TAS',
+      required:true} 
+    ]
+    ],
+    button_label_finish:'提交',
+    button_label_back:'上一页',
+    button_label_next:'下一页',
+    required_error_text:"请填写问题"
+    };
+
+      jsPsych.run([questions]);
+
+</script>
+</html>

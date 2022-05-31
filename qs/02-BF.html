@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Q-02</title>
+    <script src="../jspsych/dist/jspsych.js"></script>
+    <script src="../jspsych/dist/plugin-survey.js"></script>
+    <link href="../jspsych/dist/jspsych.css" rel="stylesheet" type="text/css" />
+    <link href="../jspsych/dist/plugin-survey.css" rel="stylesheet" >
+
+  </head>
+  <body></body>
+  <script>
+
+    // initialize jsPsych
+    var jsPsych = initJsPsych({
+      on_finish : function(){
+            var date = new Date().toLocaleDateString();
+            var subname=JSON.parse(jsPsych.data.get().json().slice(1,-1))['response']['name'];
+            jsPsych.data.get().localSave('json',subname+'-02-'+date+'.json');
+            location.replace("../main.html ") 
+            },
+      });
+
+    var questions = {
+    type: jsPsychSurvey,
+    pages: [
+    [
+    {type:'text',prompt:'姓名', name:'name',required: true },
+    {type: 'likert-table', 
+    prompt:`下面是一些描述人们性格特点的句子，请根据每个句子与您的性格相符程度选择相应的选项。例如：“在集体活动中，我是个活跃分子”非常恰当的描述您，那么请您在“6=完全符合”上画圈，依此类推。每个人的性格各不相同，所以答案没有对错之分，请根据您的实际情况作答。`,
+    statements:
+        [{prompt:'1. 我常感到害怕', name: '1'},
+        {prompt:'2.	一旦确定了目标，我会坚持努力地实现它', name: '2'},
+        {prompt:'3.	我觉得大部分人基本上是心怀善意的 ', name: '3'},
+        {prompt:'4.	我头脑中经常充满生动的画面', name: '4'},
+        {prompt:'5.	我对人多的聚会感到乏味', name: '5'},
+        {prompt:'6.	有时我觉得自己一无是处', name: '6'},
+        {prompt:'7.	我常常是仔细考虑之后才做出决定', name: '7'},
+        {prompt:'8.	我不太关心别人是否受到不公正的待遇', name: '8'},
+        {prompt:'9.	我是个勇于冒险，突破常规的人', name: '9'},
+        {prompt:'10.	在热闹的聚会上，我常常表现主动并尽情玩耍', name: '10'},
+        {prompt:'11.	别人一句漫不经心的话，我常会联系在自己身上', name: '11'},
+        {prompt:'12.	别人认为我是个慎重的人', name: '12'},
+        {prompt:'13.	我时常觉得别人的痛苦与我无关', name: '13'},
+        {prompt:'14.	我喜欢冒险', name: '14'},
+        {prompt:'15.	我尽量避免参加人多的聚会和嘈杂的环境', name: '15'},
+        {prompt:'16.	在面对压力时，我有种快要崩溃的感觉', name: '16'},
+        {prompt:'17.	我喜欢一开头就把事情计划好', name: '17'},
+        {prompt:'18.	我是那种只照顾好自己，不替别人担忧的人', name: '18'},
+        {prompt:'19.	我对许多事情有着很强的好奇心', name: '19'},
+        {prompt:'20.	有我在的场合一般不会冷场', name: '20'}  ],
+    options:['完全不符合','大部分不符合','有点不符合','有点符合','大部分符合','完全符合'], 
+    name:'BF1',
+    required:true}
+    ],
+    [
+    {type: 'likert-table', 
+    prompt:`下面是一些描述人们性格特点的句子，请根据每个句子与您的性格相符程度选择相应的选项。例如：“在集体活动中，我是个活跃分子”非常恰当的描述您，那么请您在“6=完全同意”上画圈，依此类推。每个人的性格各不相同，所以答案没有对错之分，请根据您的实际情况作答。`,
+    statements:
+        [
+        {prompt:'21.	我常担忧一些无关紧要的事情', name: '21'},
+        {prompt:'22.	我工作或学习很勤奋', name: '22'},
+        {prompt:'23.	虽然社会上有些骗子，但我觉得大部分人还是可信的', name: '23'},
+        {prompt:'24.	我身上具有别人没有的冒险精神', name: '24'},
+        {prompt:'25.	在一个团体中，我希望处于领导地位', name: '25'},
+        {prompt:'26.	我常常感到内心不踏实', name: '26'},
+        {prompt:'27.	我是个倾尽全力做事的人', name: '27'},
+        {prompt:'28.	当别人向我诉说不幸时，我常感到难过', name: '28'},
+        {prompt:'29.	我渴望学习一些新东西，即使它们与我的日常生活无关', name: '29'},
+        {prompt:'30.	别人多认为我是一个热情和友好的人', name: '30'},
+        {prompt:'31.	我常担心有什么不好的事情要发生', name: '31'},
+        {prompt:'32.	在工作上，我常只求能应付过去便可', name: '32'},
+        {prompt:'33.	尽管人类社会存在着一些阴暗的东西（如战争、罪恶、欺诈），我仍然相信人性总的来说是善良的。', name: '33'},
+        {prompt:'34.	我的想象力相当丰富', name: '34'},
+        {prompt:'35.	我喜欢参加社交与娱乐聚会', name: '35'},
+        {prompt:'36.	我很少感到忧郁或沮丧', name: '36'},
+        {prompt:'37.	做事讲究逻辑和条理是我的一个特点', name: '37'},
+        {prompt:'38.	我常为那些遭遇不幸的人感到难过', name: '38'},
+        {prompt:'39.	我很愿意也很容易接受那些新事物、新观点、新想法', name: '39'},
+        {prompt:'40.	我希望成为领导者而不是被领导者', name: '40'},   ],
+    options:['完全不符合','大部分不符合','有点不符合','有点符合','大部分符合','完全符合'], 
+    name:'BF2',
+    required:true}
+    ]
+    ],
+    button_label_finish:'提交',
+    button_label_back:'上一页',
+    button_label_next:'下一页',
+    required_error_text:"请填写问题"
+    };
+
+      jsPsych.run([questions]);
+
+</script>
+</html>

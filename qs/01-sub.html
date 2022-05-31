@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Q-01</title>
+    <script src="../jspsych/dist/jspsych.js"></script>
+    <script src="../jspsych/dist/plugin-survey.js"></script>
+    <link href="../jspsych/dist/jspsych.css" rel="stylesheet" type="text/css" />
+    <link href="../jspsych/dist/plugin-survey.css" rel="stylesheet" >
+
+    
+  </head>
+  <body></body>
+  <script>
+
+    // initialize jsPsych
+    var jsPsych = initJsPsych({
+        on_finish : function(){
+            var date = new Date().toLocaleDateString();
+            var subname=JSON.parse(jsPsych.data.get().json().slice(1,-1))['response']['name'];
+            jsPsych.data.get().localSave('json',subname+'-01-'+date+'.json');
+            location.replace("../main.html ") 
+            },
+      });
+
+    var questions = {
+    type: jsPsychSurvey,
+    pages: [
+
+    [
+        {type:'text',prompt:'姓名', name:'name',required: true },
+        {type:'text',prompt:'出生日期（如19880101）',required: true },
+        {type:'multi-choice',prompt:'性别',columns:5,options:['男','女'],required:true},
+        {type:'text',prompt:'年龄',  required: true },
+        {type:'multi-choice',prompt:'受教育程度',columns:0,options:['初中及以下','高中','大专','本科','研究生及以上'],required:true},
+        {type:'multi-choice',prompt:'是否独生子女',columns:0,options:['是','否'],required:true},
+        {type:'multi-choice',prompt:'婚姻状况',columns:0,options:['未婚','已婚','离异'],required:true},
+        {type:'multi-choice',prompt:'父母婚姻状况',columns:0,options:['未婚','已婚','离异'],required:true},
+        {type:'multi-choice',prompt:'家庭成员是否吸毒',columns:0,options:['是','否'],required:true},
+        {type:'multi-select',prompt:'吸毒种类（多选）',columns:0,options:['冰毒','海洛因','可卡因','新型毒品'],required:true},
+        {type:'multi-select',prompt:'吸毒方式（多选）',columns:0,options:['注射','鼻吸'],required:true},
+        {type:'text',prompt:'吸毒时长（以月为单位，如四个月）',  required: true },
+        {type:'text',prompt:'戒毒时长（以月为单位，如四个月）',  required: true },
+        {type:'multi-choice',prompt:'是否复吸',columns:0,options:['是','否'],required:true},
+        {type:'multi-choice',prompt:'戒断方式',columns:0,options:['主动戒断','强制戒断'],required:true},
+        {type:'text',prompt:'进入戒毒所时长（以月为单位，如四个月）',  required: true },
+        {type:'multi-select',prompt:'正在接受的干预项目类型', columns:3,options:['拒毒训练','毒品考验','音乐放松','团体辅导','宣泄','心理健康讲座','音乐床催眠','生物反馈'], required: true },
+    ]
+    ],
+    button_label_finish:'提交',
+    show_question_numbers:'on',
+    required_error_text:"请填写问题"
+    };
+
+      jsPsych.run([questions]);
+
+</script>
+</html>

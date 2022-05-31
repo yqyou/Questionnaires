@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Q-10</title>
+    <script src="../jspsych/dist/jspsych.js"></script>
+    <script src="../jspsych/dist/plugin-survey.js"></script>
+    <link href="../jspsych/dist/jspsych.css" rel="stylesheet" type="text/css" />
+    <link href="../jspsych/dist/plugin-survey.css" rel="stylesheet" >
+
+    
+  </head>
+  <body></body>
+  <script>
+
+    // initialize jsPsych
+    var jsPsych = initJsPsych({
+        on_finish : function(){
+            var date = new Date().toLocaleDateString();
+            var subname=JSON.parse(jsPsych.data.get().json().slice(1,-1))['response']['name'];
+            jsPsych.data.get().localSave('json',subname+'-10-'+date+'.json');
+            location.replace("../main.html ") 
+            },
+      });
+
+    var questions = {
+    type: jsPsychSurvey,
+    pages: [
+
+    [
+        {type:'text',prompt:'姓名', name:'name',required: true },
+    {type: 'likert-table', 
+    prompt:'以下表述请根据其与自己符合的程度进行作答。',
+    statements:
+        [{prompt:'令人高兴的事情发生时，我会表达自己的愉悦之情', name: '1'},
+        {prompt:'参加聚会时我会尽情表达自己的快乐', name: '2'},
+        {prompt:'预期目标实现时，我会对自己感到满意 ', name: '3'},
+        {prompt:'我会为自己的成功雀跃', name: '4'},
+        {prompt:'受到父母或其他重要人物斥责时，我能够控制自己的消极情绪', name: '5'},
+        {prompt:'当别人故意找我麻烦时，我能够避免恼火', name: '6'},
+        {prompt:'碰到败兴的事情后，我能够很快摆脱恼怒的情绪', name: '7'},
+        {prompt:'当我生气时，我能避免勃然大怒', name: '8'},
+        {prompt:'孤独时我能够让自己远离沮丧', name: '9'},
+        {prompt:'面对尖锐的批评，我能够不气馁', name: '10'},
+        {prompt:'未获应得的赞赏时，我能够减轻心中的失落感', name: '11'},
+        {prompt:'面对困难，我能够不气馁', name: '12'},    ],
+    options:['很不符合','比较不符合','一般','比较符合','非常符合'], 
+    name:'RESS',
+    required:true} 
+    ]
+    ],
+    button_label_finish:'提交',
+    button_label_back:'上一页',
+    button_label_next:'下一页',
+    required_error_text:"请填写问题"
+    };
+
+      jsPsych.run([questions]);
+
+</script>
+</html>

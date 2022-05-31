@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Q-03</title>
+    <script src="../jspsych/dist/jspsych.js"></script>
+    <script src="../jspsych/dist/plugin-survey.js"></script>
+    <link href="../jspsych/dist/jspsych.css" rel="stylesheet" type="text/css" />
+    <link href="../jspsych/dist/plugin-survey.css" rel="stylesheet" >
+    
+  </head>
+  <body></body>
+  <script>
+
+    // initialize jsPsych
+    var jsPsych = initJsPsych({
+      on_finish : function(){
+            var date = new Date().toLocaleDateString();
+            var subname=JSON.parse(jsPsych.data.get().json().slice(1,-1))['response']['name'];
+            jsPsych.data.get().localSave('json',subname+'-03-'+date+'.json');
+            location.replace("../main.html ") 
+            },
+      });
+
+    var questions = {
+    type: jsPsychSurvey,
+    pages: [
+  [
+  {type:'text',prompt:'姓名', name:'name',required: true },
+    {type: 'likert-table', 
+    prompt:`下面是一些描述人们心理特点的句子，请根据每个句子与您的相符程度选择相应的选项。`,
+    statements:
+        [ {prompt:'1.	我能适应变化', name: '1'},
+        {prompt:'2.	我有亲密、安全的关系', name: '2'},
+        {prompt:'3.	我对自己的成绩感到骄傲', name: '3'},
+        {prompt:'4.	我努力工作以达到目标', name: '4'},
+        {prompt:'5.	我感觉能掌控自己的生活', name: '5'},
+        {prompt:'6.	我有强烈的目的感', name: '6'},
+        {prompt:'7.	我能看到事情幽默的一面', name: '7'},
+        {prompt:'8.	事情发生总是有原因的', name: '8'},
+        {prompt:'9.	我不得不按照预感行事', name: '9'},
+        {prompt:'10.	我能处理不快乐的情绪', name: '10'},
+        {prompt:'11.	有时，命运或上帝能帮忙', name: '11'},
+        {prompt:'12.	无论发生什么我都能应付', name: '12'},
+        {prompt:'13.	过去的成功让我有信心面对挑战', name: '13'},
+        {prompt:'14.	应对压力使我感到有力量', name: '14'},
+        {prompt:'15.	我喜欢挑战', name: '15'},
+        {prompt:'16.	我能做出不寻常的或艰难的决定', name: '16'},
+        {prompt:'17.	我认为自己是个强有力的人', name: '17'},
+        {prompt:'18.	当事情看起来没什么希望时，我不会轻易放弃', name: '18'},
+        {prompt:'19.	无论结果怎样，我都会尽自己最大努力', name: '19'},
+        {prompt:'20.	我能实现自己的目标', name: '20'},
+        {prompt:'21.	我不会因失败而气馁', name: '21'},
+        {prompt:'22.	经历艰难或疾病后，我往往会很快恢复', name: '22'},
+        {prompt:'23.	我知道去哪里寻求帮助', name: '23'},
+        {prompt:'24.	在压力下，我能够集中注意力并清晰思考', name: '24'},
+        {prompt:'25.	我喜欢在解决问题时起带头作用', name: '25'}  ],
+    options:['从不','很少','有时','经常','几乎所有时候都是这样'],
+    name:'RISC',
+    required:true}
+    ]
+    ],
+    button_label_finish:'提交',
+    button_label_back:'上一页',
+    button_label_next:'下一页',
+    required_error_text:"请填写问题"
+    };
+
+      jsPsych.run([questions]);
+
+</script>
+</html>

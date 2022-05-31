@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Q-09</title>
+    <script src="../jspsych/dist/jspsych.js"></script>
+    <script src="../jspsych/dist/plugin-survey.js"></script>
+    <link href="../jspsych/dist/jspsych.css" rel="stylesheet" type="text/css" />
+    <link href="../jspsych/dist/plugin-survey.css" rel="stylesheet" >
+
+    
+  </head>
+  <body></body>
+  <script>
+
+    // initialize jsPsych
+    var jsPsych = initJsPsych({
+        on_finish : function(){
+            var date = new Date().toLocaleDateString();
+            var subname=JSON.parse(jsPsych.data.get().json().slice(1,-1))['response']['name'];
+            jsPsych.data.get().localSave('json',subname+'-09-'+date+'.json');
+            location.replace("../main.html ") 
+            },
+      });
+
+    var questions = {
+    type: jsPsychSurvey,
+    pages: [
+
+    [
+        {type:'text',prompt:'姓名', name:'name',required: true },
+    {type: 'likert-table', 
+    prompt:'以下问题是想了解你的社交偏好，请你结合题目根据自己的实际情况作答。',
+    statements:
+        [{prompt:'和其他人出去玩的时候是我最高兴的时候', name: '1'},
+        {prompt:'当可以选择的时候，我愿意和其他人一起做些事情而不是单独一个人相处。', name: '2'},
+        {prompt:'当可以选择的时候， 我总是愿意一个人待着因为我不喜欢和他人交往。', name: '3'},
+        {prompt:'我喜欢和人们在一起。', name: '4'},
+        {prompt:'有机会的话，我愿意参加社交活动。', name: '5'},
+        {prompt:'我喜欢和他人合作而不是独挑大梁。', name: '6'},
+        {prompt:'我真的不喜欢与他人相处，更愿意独处。', name: '7'},
+        {prompt:'我喜欢和别人一起出去玩，但是他们不愿意和我相处。', name: '8'},
+        {prompt:'我希望能够花更多的时间与他人相处，但是别人并不愿意。', name: '9'},
+        {prompt:'我愿意和他人出去，但是我经常被排斥。', name: '10'},
+        {prompt:'有时候，大家不想和我来往。', name: '11'},
+        {prompt:'有时候我会拒绝别人的邀约，因为我太害羞了。', name: '12'},
+        {prompt:'当我独处时，我会觉得很空虚', name: '13'},
+        {prompt:'其他人玩成一片时，我会站在一旁，并不参与。', name: '14'},
+        {prompt:'我愿意和他人出去玩，但是我有时会紧张。', name: '15'},
+        {prompt:'我比较害羞。', name: '16'},
+        {prompt:'在社交环境中我会感到紧张。', name: '17'},
+        {prompt:'在聚会和一些社交场合，我会感到焦虑。', name: '18'},
+        {prompt:'我不介意独处。', name: '19'},
+        {prompt:'我不喜欢与别人相处，宁愿独处。', name: '20'},
+        {prompt:'我没有与他人相处的强烈愿望。', name: '21'},
+        {prompt:'我不喜欢与别人相处，宁愿独处。', name: '22'},
+        {prompt:'不论独处还是与他人相处，我都一样高兴。', name: '23'}],
+      options:['非常不同意','不太同意','不知道','比较同意','非常同意'], 
+      name:'SPS',
+      required:true}
+    ]
+    ],
+    button_label_finish:'提交',
+    button_label_back:'上一页',
+    button_label_next:'下一页',
+    required_error_text:"请填写问题"
+    };
+
+      jsPsych.run([questions]);
+
+</script>
+</html>

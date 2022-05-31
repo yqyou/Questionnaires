@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Q-04</title>
+    <script src="../jspsych/dist/jspsych.js"></script>
+    <script src="../jspsych/dist/plugin-survey.js"></script>
+    <link href="../jspsych/dist/jspsych.css" rel="stylesheet" type="text/css" />
+    <link href="../jspsych/dist/plugin-survey.css" rel="stylesheet" >
+
+    
+  </head>
+  <body></body>
+  <script>
+
+    // initialize jsPsych
+    var jsPsych = initJsPsych({
+        on_finish : function(){
+            var date = new Date().toLocaleDateString();
+            var subname=JSON.parse(jsPsych.data.get().json().slice(1,-1))['response']['name'];
+            jsPsych.data.get().localSave('json',subname+'-04-'+date+'.json');
+            location.replace("../main.html ") 
+            },
+      });
+
+    var questions = {
+    type: jsPsychSurvey,
+    pages: [
+
+    [
+    {type:'text',prompt:'姓名', name:'name',required: true },
+    {type: 'likert-table', 
+    prompt:'对于以下每项问题，请选择最符合您成瘾物质使用行为的选项。请以过去七天成瘾物质使用的情形来回答每项问题。',
+    statements:
+        [{prompt:'我根本意识不到我正在使用成瘾物质', name: '1'},
+        {prompt:'我会不自觉得去使用成瘾物质', name: '2'},
+        {prompt:'我注意不到自己用了多少成瘾物质 ', name: '3'},
+        {prompt:'我控制不了自己总是去想那些我正在使用的成瘾物质', name: '4'},
+        {prompt:'即使我自己想要克制自己不用那些成瘾物质，我还是没办法控制自己', name: '5'},
+        {prompt:'我意识不到自己正在用那些成瘾物质', name: '6'},
+        {prompt:'我控制不了自己使用那些成瘾物质', name: '7'},
+        {prompt:'只有在用完了那些成瘾物质后，我才意识到自己做了什么', name: '8'},
+        {prompt:'我会不假思索的使用那些成瘾物质', name: '9'}, 
+        {prompt:'即使我自己不想，我还是会使用那些成瘾物质', name: '10'},
+        {prompt:'当别人给我这些成瘾物质时，我无法抵抗诱惑', name: '11'},
+        {prompt:'我只有事后才意识到我在使用这些成瘾物质', name: '12'},
+        {prompt:'我感觉自己无法自由决定是否使用那些成瘾物质', name: '13'},
+        {prompt:'我计划使用少量成瘾物质时，但最后常常会用超出我预期的量', name: '14'},
+        {prompt:'我并没有很想去用那些成瘾物质，但我还是会用', name: '15'},
+         ],
+      options:['不会','几乎不会','偶尔','频繁','非常频繁','总是如此'],
+      name:'craving',
+      required:true},
+      {type:'text',prompt:'你上次使用这些成瘾物质是几天前?',name:'day',required: true },
+    ]
+    ],
+    button_label_finish:'提交',
+    button_label_back:'上一页',
+    button_label_next:'下一页',
+    required_error_text:"请填写问题"
+    };
+
+      jsPsych.run([questions]);
+
+</script>
+</html>

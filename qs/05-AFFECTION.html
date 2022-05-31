@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Q-05</title>
+    <script src="../jspsych/dist/jspsych.js"></script>
+    <script src="../jspsych/dist/plugin-survey-likert.js"></script>
+    <script src="../jspsych/dist/plugin-survey-text.js"></script>
+    <link href="../jspsych/dist/jspsych.css" rel="stylesheet" type="text/css" />
+
+    
+  </head>
+  <body></body>
+  <script>
+
+    // initialize jsPsych
+    var jsPsych = initJsPsych({
+        on_finish : function(){
+            console.log(jsPsych.data.get())
+            var date = new Date().toLocaleDateString();
+            var subname=eval(jsPsych.data.get().json())[0]['response']['name'];
+            jsPsych.data.get().localSave('json',subname+'-05-'+date+'.json');
+            location.replace("../main.html ") 
+            },
+      });
+
+    var scale = ['从不','偶尔','有时','经常','总是'];
+
+
+    var sub_info = {
+      type: jsPsychSurveyText,
+      questions: [
+        {prompt: '姓名', columns: 50, required: true, name: 'name',required:true},
+      ],
+      button_label:'下一页',
+    };
+
+    var likert_trial_1= {
+    type: jsPsychSurveyLikert,
+    preamble:'<p>下列有一连串形容情感的词语。请评估你在最近一周中, <font color=red>理想地想要获得</font>这些情绪体验的频率。</p>',
+    questions:  [
+        {prompt:'兴奋', name: '1',labels:scale,required:true},
+        {prompt:'热情', name: '2',labels:scale,required:true},
+        {prompt:'强壮', name: '3',labels:scale,required:true},
+        {prompt:'快乐', name: '4',labels:scale,required:true},
+        {prompt:'满意', name: '5',labels:scale,required:true},
+        {prompt:'满足', name: '6',labels:scale,required:true},
+        {prompt:'平静 ', name: '7',labels:scale,required:true},
+        {prompt:'休息好 ', name: '8',labels:scale,required:true},
+        {prompt:'放松', name: '9',labels:scale,required:true},
+        {prompt:'平和 ', name: '10',labels:scale,required:true},
+        {prompt:'被动 ', name: '11',labels:scale,required:true},
+        {prompt:'静止 ', name: '12',labels:scale,required:true},
+        {prompt:'安静 ', name: '13',labels:scale,required:true},
+        {prompt:'困倦', name: '14',labels:scale,required:true},
+        {prompt:'无所事事', name: '15',labels:scale,required:true},
+        {prompt:'迟缓', name: '16',labels:scale,required:true},
+        {prompt:'悲伤', name: '17',labels:scale,required:true},
+        {prompt:'孤单', name: '18',labels:scale,required:true},
+        {prompt:'不快乐', name: '19',labels:scale,required:true},
+        {prompt:'紧张 ', name: '20',labels:scale,required:true},
+        {prompt:'敌意 ', name: '21',labels:scale,required:true},
+        {prompt:'害怕 ', name: '22',labels:scale,required:true},
+        {prompt:'震惊', name: '23',labels:scale,required:true},
+        {prompt:'唤醒的', name: '24',labels:scale,required:true},
+        {prompt:'惊讶', name: '25',labels:scale,required:true}
+    ],
+    button_label:'下一页',
+    scale_width: 500
+    };
+    var likert_trial_2 = {
+    type: jsPsychSurveyLikert,
+    preamble:'<p>下列有一连串形容情感的词语。请评估你在最近一周中, <b>实际感受到</b>这些情绪体验的频率。</p>',
+    questions:  [
+        {prompt:'兴奋', name: '1',labels:scale,required:true},
+        {prompt:'热情', name: '2',labels:scale,required:true},
+        {prompt:'强壮', name: '3',labels:scale,required:true},
+        {prompt:'快乐', name: '4',labels:scale,required:true},
+        {prompt:'满意', name: '5',labels:scale,required:true},
+        {prompt:'满足', name: '6',labels:scale,required:true},
+        {prompt:'平静 ', name: '7',labels:scale,required:true},
+        {prompt:'休息好 ', name: '8',labels:scale,required:true},
+        {prompt:'放松', name: '9',labels:scale,required:true},
+        {prompt:'平和 ', name: '10',labels:scale,required:true},
+        {prompt:'被动 ', name: '11',labels:scale,required:true},
+        {prompt:'静止 ', name: '12',labels:scale,required:true},
+        {prompt:'安静 ', name: '13',labels:scale,required:true},
+        {prompt:'困倦', name: '14',labels:scale,required:true},
+        {prompt:'无所事事', name: '15',labels:scale,required:true},
+        {prompt:'迟缓', name: '16',labels:scale,required:true},
+        {prompt:'悲伤', name: '17',labels:scale,required:true},
+        {prompt:'孤单', name: '18',labels:scale,required:true},
+        {prompt:'不快乐', name: '19',labels:scale,required:true},
+        {prompt:'紧张 ', name: '20',labels:scale,required:true},
+        {prompt:'敌意 ', name: '21',labels:scale,required:true},
+        {prompt:'害怕 ', name: '22',labels:scale,required:true},
+        {prompt:'震惊', name: '23',labels:scale,required:true},
+        {prompt:'唤醒的', name: '24',labels:scale,required:true},
+        {prompt:'惊讶', name: '25',labels:scale,required:true}
+    ],
+    button_label:'提交',
+    scale_width: 500
+    };
+
+    jsPsych.run([sub_info, likert_trial_1]);
+
+</script>
+</html>

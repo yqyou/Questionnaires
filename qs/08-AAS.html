@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Q-08</title>
+    <script src="../jspsych/dist/jspsych.js"></script>
+    <script src="../jspsych/dist/plugin-survey.js"></script>
+    <link href="../jspsych/dist/jspsych.css" rel="stylesheet" type="text/css" />
+    <link href="../jspsych/dist/plugin-survey.css" rel="stylesheet" >
+
+    
+  </head>
+  <body></body>
+  <script>
+
+    // initialize jsPsych
+    var jsPsych = initJsPsych({
+        on_finish : function(){
+            var date = new Date().toLocaleDateString();
+            var subname=JSON.parse(jsPsych.data.get().json().slice(1,-1))['response']['name'];
+            jsPsych.data.get().localSave('json',subname+'-08-'+date+'.json');
+            location.replace("../main.html ") 
+            },
+      });
+
+    var questions = {
+    type: jsPsychSurvey,
+    pages: [
+
+    [
+        {type:'text',prompt:'姓名', name:'name',required: true },
+    {type: 'likert-table', 
+    prompt:'以下问题是想了解你的独处经验，独处是指在生活重的某些时刻你的周围没有其他人，或是周围有其他人但是你并没有和他们互动，请你根据自己的实际情况作答。',
+    statements:
+        [{prompt:'远离人群能帮助我好好思索目前面临的问题', name: '1'},
+        {prompt:'独处能让我舒缓压力', name: '2'},
+        {prompt:'独处不能帮我治疗止痛', name: '3'},
+        {prompt:'当我一个人时，我更能好好思考', name: '4'},
+        {prompt:'独处一段时间能让我真正得到内在重生的感受', name: '5'},
+        {prompt:'有时候一个人做事是为了让心情沉淀', name: '6'},
+        {prompt:'独处不能让我把所遭遇的状况弄清楚', name: '7'},
+        {prompt:'有时候远离人群才能消除自己的愤怒和压力', name: '8'},
+        {prompt:'当我心情不好时，独处只会让我觉得更糟', name: '9'},
+        {prompt:'当我面临很大的压力时，我需要有人陪', name: '10'},
+        {prompt:'我喜欢一个人独处', name: '11'},
+        {prompt:'有时候我独处时觉得愉快', name: '12'},
+        {prompt:'当我独处时，我会觉得很空虚', name: '13'},
+        {prompt:'除非有人陪，否则我快乐不起来', name: '14'},
+        {prompt:'我尽量让自己不要落单', name: '15'},
+        {prompt:'独处时无法让我感受到内心平静', name: '16'},
+        {prompt:'如果不能和别人分享我的感受或所参与的活动，那么这些就都毫无意义了', name: '17'},
+        {prompt:'当我自己一个人时，我对自己很满意', name: '18'},
+        {prompt:'当我自己一个人时，我总是能找到事情来做', name: '19'},
+        {prompt:'当我自己一个人时，我觉得内心很平静', name: '20'}  ],
+    options:['非常不符合','不符合','符合','非常符合'],
+    name:'AAS',
+    required:true} 
+    ]
+    ],
+    button_label_finish:'提交',
+    button_label_back:'上一页',
+    button_label_next:'下一页',
+    required_error_text:"请填写问题"
+    };
+
+      jsPsych.run([questions]);
+
+</script>
+</html>

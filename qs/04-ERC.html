@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Q-04</title>
+    <script src="../jspsych/dist/jspsych.js"></script>
+    <script src="../jspsych/dist/plugin-survey.js"></script>
+    <link href="../jspsych/dist/jspsych.css" rel="stylesheet" type="text/css" />
+    <link href="../jspsych/dist/plugin-survey.css" rel="stylesheet" >
+    
+  </head>
+  <body></body>
+  <script>
+
+    // initialize jsPsych
+    var jsPsych = initJsPsych({
+        on_finish : function(){
+            var date = new Date().toLocaleDateString();
+            var subname=JSON.parse(jsPsych.data.get().json().slice(1,-1))['response']['name'];
+            jsPsych.data.get().localSave('json',subname+'-04-'+date+'.json');
+            location.replace("../main.html ") 
+            },
+      });
+
+    var questions = {
+    type: jsPsychSurvey,
+    pages: [
+   
+    [
+    {type:'text',prompt:'姓名', name:'name',required: true },
+    {type: 'likert-table', 
+    prompt:`下面给出了许多句子，都是描述恋爱关系中的每个人可能会有的感觉。在你的恋爱关系中，你自己的一般体验与每个句子描述的情况相似的地方有多大? 请按实际情况作答。 注意，这里并不仅仅是指现在的恋爱经历，它针对的是你所有恋爱经历中常常体验到的感觉。如果没有恋爱过可以按照和朋友的关系体验填写。`,
+    statements:
+        [{prompt:'1.	总的来说，我不喜欢让恋人知道自己内心深处的感觉；', name: '1'},
+        {prompt:'2.	我担心我会被抛弃；', name: '2'},
+        {prompt:'3.	我觉得跟恋人亲近是一件惬意的事情；', name: '3'},
+        {prompt:'4.	我很担心我的恋爱关系；', name: '4'},
+        {prompt:'5.	当恋人开始要跟我亲近时，我发现我自己在退缩；', name: '5'},
+        {prompt:'6.	我担心恋人不会象我关心他(/她)那样地关心我；', name: '6'},
+        {prompt:'7.	当恋人希望跟我非常亲近时，我会觉得不自在；', name: '7'},
+        {prompt:'8.	我有点担心会失去恋人；', name: '8'},
+        {prompt:'9.	我觉得对恋人开诚布公，不是一件很舒服的事情；', name: '9'},
+        {prompt:'10.	我常常希望恋人对我的感情和我对恋人的感情一样强烈；', name: '10'},
+        {prompt:'11.	我想与恋人亲近，但我又总是会退缩不前；', name: '11'},
+        {prompt:'12.	我常常想与恋人形影不离，但有时这样会把恋人吓跑；', name: '12'},
+        {prompt:'13.	当恋人跟我过分亲密的时候，我会感到内心紧张；', name: '13'},
+        {prompt:'14.	我担心一个人独处；', name: '14'},
+        {prompt:'15.	我愿意把我内心的想法和感觉告诉恋人，我觉得这是一件自在的事情；', name: '15'},
+        {prompt:'16.	我想跟恋人非常亲密的愿望，有时会把恋人吓跑；', name: '16'},
+        {prompt:'17.	我试图避免与恋人变得太亲近；', name: '17'},
+        {prompt:'18.	我需要我的恋人一再地保证他/她是爱我的；', name: '18'},
+        {prompt:'19.	我觉得我比较容易与恋人亲近；', name: '19'},
+        {prompt:'20.	我觉得自己在要求恋人把更多的感觉，以及对恋爱关系的投入程度表现出来；', name: '20'}],
+    options:['非常不同意','比较不同意','有点不同意','不确定','有点同意','比较同意','非常同意'],
+    name:'ERC1',
+    required:true}
+    ],
+    [
+    {type: 'likert-table', 
+      prompt:`下面给出了许多句子，都是描述恋爱关系中的每个人可能会有的感觉。在你的恋爱关系中，你自己的一般体验与每个句子描述的情况相似的地方有多大? 按1表示非常不同意，7表示非常同意，1至7表示相符程度逐渐提高。请按实际情况作答。 注意，这里并不仅仅是指现在的恋爱经历，它针对的是你所有恋爱经历中常常体验到的感觉。如果没有恋爱过可以按照和朋友的关系体验填写。`,
+      statements:
+          [{prompt:'21.	21.我发现让我依赖恋人，是一件困难的事情；', name: '21'},
+          {prompt:'22.	我并不是常常担心被恋人抛弃；', name: '22'},
+          {prompt:'23.	我倾向于不跟恋人过分亲密；', name: '23'},
+          {prompt:'24.	如果我无法得到恋人的注意和关心，我会心烦意乱或者生气；', name: '24'},
+          {prompt:'25.	我跟恋人什么事情都讲；', name: '25'},
+          {prompt:'26.	我发现恋人并不愿意象我所想的那样跟我亲近；', name: '26'},
+          {prompt:'27.	我经常与恋人讨论我所遇到的问题以及我关心的事情；', name: '27'},
+          {prompt:'28.	如果我还没有恋人的话，我会感到有点焦虑和不安；', name: '28'},
+          {prompt:'29.	我觉得依赖恋人是很自在的事情；', name: '29'},
+          {prompt:'30.	如果恋人不能象我所希望的那样在我身边时，我会感到灰心丧气；', name: '30'},
+          {prompt:'31.	我并不在意从恋人那里寻找安慰，听取劝告，得到帮助；', name: '31'},
+          {prompt:'32.	如果在我需要的时候，恋人却不在我身边，我会感到沮丧；', name: '32'},
+          {prompt:'33.	在需要的时候，我向恋人求助，是很有用的；', name: '33'},
+          {prompt:'34.	当恋人不赞同我时，我觉得确实是我不好；', name: '34'},
+          {prompt:'35.	我会在很多事情上向恋人求助，包括寻求安慰和得到承诺；', name: '35'},
+          {prompt:'36.	当恋人不花时间和我在一起时，我会感到怨恨？', name: '36'}
+          ],
+      options:['非常不同意','比较不同意','有点不同意','不确定','有点同意','比较同意','非常同意'],
+      name:'ERC2',
+      required:true},
+    ]
+    ],
+    button_label_finish:'提交',
+    button_label_back:'上一页',
+    button_label_next:'下一页',
+    required_error_text:"请填写问题"
+    };
+
+      jsPsych.run([questions]);
+
+</script>
+</html>

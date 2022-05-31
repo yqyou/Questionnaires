@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Q-06</title>
+    <script src="../jspsych/dist/jspsych.js"></script>
+    <script src="../jspsych/dist/plugin-survey.js"></script>
+    <link href="../jspsych/dist/jspsych.css" rel="stylesheet" type="text/css" />
+    <link href="../jspsych/dist/plugin-survey.css" rel="stylesheet" >
+
+    
+  </head>
+  <body></body>
+  <script>
+
+    // initialize jsPsych
+    var jsPsych = initJsPsych({
+        on_finish : function(){
+            var date = new Date().toLocaleDateString();
+            var subname=JSON.parse(jsPsych.data.get().json().slice(1,-1))['response']['name'];
+            jsPsych.data.get().localSave('json',subname+'-06-'+date+'.json');
+            location.replace("../main.html ") 
+            },
+      });
+
+    var questions = {
+    type: jsPsychSurvey,
+    pages: [
+
+    [
+        {type:'text',prompt:'姓名', name:'name',required: true },
+    {type: 'likert-table', 
+    prompt:`请根据您在人生前18年的经历回答问题。`,
+    statements:
+        [{prompt:'你的父母/监护人了解你的问题和担忧吗？', name: '1'},
+        {prompt:'当你不在学校或工作时，你的父母/监护人真的知道你在空闲时间做什么吗？', name: '2'},
+        {prompt:'你的父母/监护人给你足够食物的频率有多高，即使他们本可以很容易做到？', name: '3'},
+        {prompt:'你的父母/监护人有多少次没有送你去学校，即使在他们有空的时候？', name: '4'}  ],
+    options:['从不','很少','有时','经常','总是'],
+    name:'ACE1',
+    required:true}
+    ],
+    [
+    {type: 'likert-table', 
+    prompt:`请根据您在人生前18年的经历回答问题。`,
+    statements:
+        [{prompt:'你的父母/监护人是否因酗酒或吸毒而无法照顾你？', name: '1'},
+        {prompt:'父母、监护人或其他家庭成员是否对你大喊大叫、尖叫或咒骂，侮辱或羞辱你？', name: '2'},
+        {prompt:'父母、监护人或其他家庭成员是否威胁或实际上抛弃你或将你赶出家门？', name: '3'},
+        {prompt:'父母、监护人或其他家庭成员有没有打你屁股、打你耳光、踢你、或打你？', name: '4'},
+        {prompt:'父母、监护人或其他家庭成员是否用棍子（或手杖）、瓶子、棍棒、刀、鞭子等物品殴打或割伤了你？', name: '5'},
+        {prompt:'当你不想让某人触摸或抚摸你时，他们是否以性的方式触摸或抚摸你？', name: '6'},
+        {prompt:'当你不想让某人用性的方式触摸他们的身体时，他们是否让你用性的方式触摸他们的身体？', name: '7'},
+        {prompt:'当你不想让某人与你进行口交、肛交或阴道性交时，他们是否尝试过？', name: '8'},
+        {prompt:'当你不希望某人与你进行口交、肛交或阴道性交时，他们是否真的与你进行了口交、肛交或阴道性交？', name: '9'},
+        {prompt:'您是否与酗酒或滥用街头或处方药的家庭成员住在一起？', name: '10'},
+        {prompt:'您是否与患有抑郁症、精神病或自杀的家庭成员住在一起？', name: '11'},
+        {prompt:'您是否与曾被送进监狱或监狱的家庭成员住在一起？', name: '12'},
+        {prompt:'你的父母曾经分居或离婚吗？', name: '13'},
+        {prompt:'你的母亲、父亲或监护人是否离世？', name: '14'},
+        {prompt:'您是否看到或听到您家中的父母或家庭成员被吼叫、尖叫、咒骂、侮辱或羞辱？', name: '15'},
+        {prompt:'您是否看到或听到您家中的父母或家庭成员被扇耳光、踢、打或殴打？', name: '16'},
+        {prompt:'您是否看到或听到家中的父母或家庭成员被棍棒（或手杖）、瓶子、棍棒、刀、鞭子等物体击中或割伤。？', name: '17'},
+        {prompt:'你是否被家庭以外的人殴打过？', name: '18'},
+        {prompt:'你在现实生活中看到或听到有人被殴打吗？', name: '19'},
+        {prompt:'你在现实生活中看到或听到有人被刺伤或枪击吗？', name: '20'},
+        {prompt:'在现实生活中，你是否看到或听到有人受到刀或枪的威胁？', name: '21'},
+        {prompt:'你是否因为这些事件而被迫去另一个地方居住？', name: '22'},
+        {prompt:'你是否经历过由于这些事件而故意毁坏您的家？', name: '23'} ],
+    options:['是','否'],
+    name:'ACE2',
+    required:true}
+    ]
+    ],
+    button_label_finish:'提交',
+    button_label_back:'上一页',
+    button_label_next:'下一页',
+    required_error_text:"请填写问题"
+    };
+
+      jsPsych.run([questions]);
+
+</script>
+</html>

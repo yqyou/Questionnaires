@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Q-11</title>
+    <script src="../jspsych/dist/jspsych.js"></script>
+    <script src="../jspsych/dist/plugin-survey.js"></script>
+    <link href="../jspsych/dist/jspsych.css" rel="stylesheet" type="text/css" />
+    <link href="../jspsych/dist/plugin-survey.css" rel="stylesheet" >
+
+    
+  </head>
+  <body></body>
+  <script>
+
+    // initialize jsPsych
+    var jsPsych = initJsPsych({
+        on_finish : function(){
+            var date = new Date().toLocaleDateString();
+            var subname=JSON.parse(jsPsych.data.get().json().slice(1,-1))['response']['name'];
+            jsPsych.data.get().localSave('json',subname+'-11-'+date+'.json');
+            location.replace("../main.html ") 
+            },
+      });
+
+    var questions = {
+    type: jsPsychSurvey,
+    pages: [
+
+    [
+        {type:'text',prompt:'姓名', name:'name',required: true },
+    {type: 'likert-table', 
+    prompt:'请仔细阅读每一条，并根据您最近一周的实际情况，即在最近的一周您的感受如何，选择最适合您的答案',
+    statements:
+        [{prompt:'我感到消沉', name: '1'},
+        {prompt:'我觉得沮丧，就算有家人和朋友帮助也不管用', name: '2'},
+        {prompt:'我感到快乐 ', name: '3'},
+        {prompt:'我提不起劲儿来做事', name: '4'},
+        {prompt:'我生活愉快', name: '5'},
+        {prompt:'我感到悲伤难过', name: '6'},
+        {prompt:'我觉得做每件事都费力', name: '7'},
+        {prompt:'我觉得孤独', name: '8'},
+        {prompt:'我不能集中精力做事', name: '9'},   ],
+    options:['偶尔或无（少于1天）','有时或少许（1～2天）','时常或一半的时间（3～4天）','多数时间或持续（5～7天）'],
+    name:'CES_D',
+    required:true}
+    ]
+    ],
+    button_label_finish:'提交',
+    button_label_back:'上一页',
+    button_label_next:'下一页',
+    required_error_text:"请填写问题"
+    };
+
+      jsPsych.run([questions]);
+
+</script>
+</html>
