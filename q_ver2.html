@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>My Questionnaire</title>
+    <script src="jspsych/dist/jspsych.js"></script>
+    <script src="jspsych/dist/plugin-survey.js"></script>
+    <script src="jspsych/dist/plugin-html-button-response.js"></script>
+    <script src="jspsych/dist/plugin-survey-likert.js"></script>
+    <link href="jspsych/dist/jspsych.css" rel="stylesheet" type="text/css" />
+    <link href="jspsych/dist/plugin-survey.css" rel="stylesheet" >
+
+    <style>
+        .p2-grid{text-align: left;line-height:50px;font-size:18px;margin-left:200px;margin-right: 150px;margin-bottom:40px;margin-top: 40px;line-height:40px;  }
+    </style>
+  </head>
+  <body></body>
+  <script>
+
+    // initialize jsPsych
+    var jsPsych = initJsPsych({
+        on_finish : function(){
+            var date = new Date().toLocaleDateString();
+            var subname=JSON.parse(jsPsych.data.get().json())[1]['response']['name'];
+            jsPsych.data.get().localSave('json',subname+'_'+date+'.json');
+            },
+        show_progress_bar: true,
+      });
+    
+    var timeline=[];
+
+    var introduction = {
+    type:jsPsychHtmlButtonResponse,
+    stimulus: `<p   class="p2-grid">您好！我们是上海交通大学研究团队和云南一所心理矫治中心研究团队。<br>
+        本项目致力于对成瘾机制的研究，我们诚邀您的参加！<br>
+        您需要在电脑前根据真实情况，认真填写问卷。<br>
+        我们承诺您的所有数据仅用于科学研究，数据会严格保密，仅限于本项目科研使用。<br>
+        感谢您为本研究项目做出的贡献！</p> `,
+    choices:["开始填写"]
+    };
+    timeline.push(introduction)
+    
+    var sub_1 = {
+    type: jsPsychSurvey,
+    pages: [
+    [
+    {type:'text',prompt:'姓名', name:'name',required: true },
+        {type:'text',prompt:'出生日期（如19880101）',required: true },
+        {type:'multi-choice',prompt:'性别',columns:5,options:['男','女'],required:true},
+        {type:'text',prompt:'年龄',  required: true },
+        {type:'multi-choice',prompt:'受教育程度',columns:0,options:['初中及以下','高中','大专','本科','研究生及以上'],required:true},
+        {type:'multi-choice',prompt:'是否独生子女',columns:0,options:['是','否'],required:true},
+        {type:'multi-choice',prompt:'婚姻状况',columns:0,options:['未婚','已婚','离异'],required:true},
+        {type:'multi-choice',prompt:'父母婚姻状况',columns:0,options:['未婚','已婚','离异'],required:true},
+        {type:'multi-choice',prompt:'家庭成员是否吸毒',columns:0,options:['是','否'],required:true},
+        {type:'multi-select',prompt:'吸毒种类（多选）',columns:0,options:['冰毒','海洛因','可卡因','新型毒品'],required:true},
+        {type:'multi-select',prompt:'吸毒方式（多选）',columns:0,options:['注射','鼻吸'],required:true},
+        {type:'text',prompt:'吸毒时长（以年为单位的数字（可为小数），如3.6））',  required: true },
+        {type:'text',prompt:'进入戒毒所时长（以年为单位的数字（可为小数），如3.6））',  required: true },
+        {type:'multi-choice',prompt:'是否复吸',columns:0,options:['是','否'],required:true},
+        {type:'multi-choice',prompt:'戒断方式',columns:0,options:['主动戒断','强制戒断'],required:true},
+        {type:'multi-select',prompt:'正在接受的干预项目类型（多选）', columns:3,options:['拒毒训练','毒品考验','音乐放松','团体辅导','宣泄','心理健康讲座','音乐床催眠','生物反馈'], required: true },        
+ ]
+    ],
+    button_label_finish:'下一页',
+    show_question_numbers:'on',
+    required_error_text:"请填写问题"
+    };
+    timeline.push(sub_1)
+
+    var bf = {
+    type: jsPsychSurvey,
+    pages: [
+    [
+    {type: 'likert-table', 
+    prompt:`下面是一些描述人们性格特点的句子，请根据每个句子与您的性格相符程度选择相应的选项。例如：“在集体活动中，我是个活跃分子”非常恰当的描述您，那么请您点击表示“完全符合”的圆圈，依此类推。每个人的性格各不相同，所以答案没有对错之分，请根据您的实际情况作答。`,
+    statements:
+        [{prompt:'1. 我常感到害怕', name: '1'},
+        {prompt:'2.	一旦确定了目标，我会坚持努力地实现它', name: '2'},
+        {prompt:'3.	我觉得大部分人基本上是心怀善意的 ', name: '3'},
+        {prompt:'4.	我头脑中经常充满生动的画面', name: '4'},
+        {prompt:'5.	我对人多的聚会感到乏味', name: '5'},
+        {prompt:'6.	有时我觉得自己一无是处', name: '6'},
+        {prompt:'7.	我常常是仔细考虑之后才做出决定', name: '7'},
+        {prompt:'8.	我不太关心别人是否受到不公正的待遇', name: '8'},
+        {prompt:'9.	我是个勇于冒险，突破常规的人', name: '9'},
+        {prompt:'10.	在热闹的聚会上，我常常表现主动并尽情玩耍', name: '10'},
+        {prompt:'11.	别人一句漫不经心的话，我常会联系在自己身上', name: '11'},
+        {prompt:'12.	别人认为我是个慎重的人', name: '12'},
+        {prompt:'13.	我时常觉得别人的痛苦与我无关', name: '13'},
+        {prompt:'14.	我喜欢冒险', name: '14'},
+        {prompt:'15.	我尽量避免参加人多的聚会和嘈杂的环境', name: '15'},
+        {prompt:'16.	在面对压力时，我有种快要崩溃的感觉', name: '16'},
+        {prompt:'17.	我喜欢一开头就把事情计划好', name: '17'},
+        {prompt:'18.	我是那种只照顾好自己，不替别人担忧的人', name: '18'},
+        {prompt:'19.	我对许多事情有着很强的好奇心', name: '19'},
+        {prompt:'20.	有我在的场合一般不会冷场', name: '20'}  ],
+    options:['完全不符合','大部分不符合','有点不符合','有点符合','大部分符合','完全符合'], 
+    name:'BF1',
+    required:true}
+    ],
+    [
+    {type: 'likert-table', 
+    prompt:`下面是一些描述人们性格特点的句子，请根据每个句子与您的性格相符程度选择相应的选项。例如：“在集体活动中，我是个活跃分子”非常恰当的描述您，那么请您点击表示“完全符合”的圆圈，依此类推。每个人的性格各不相同，所以答案没有对错之分，请根据您的实际情况作答。`,
+    statements:
+        [
+        {prompt:'21.	我常担忧一些无关紧要的事情', name: '21'},
+        {prompt:'22.	我工作或学习很勤奋', name: '22'},
+        {prompt:'23.	虽然社会上有些骗子，但我觉得大部分人还是可信的', name: '23'},
+        {prompt:'24.	我身上具有别人没有的冒险精神', name: '24'},
+        {prompt:'25.	在一个团体中，我希望处于领导地位', name: '25'},
+        {prompt:'26.	我常常感到内心不踏实', name: '26'},
+        {prompt:'27.	我是个倾尽全力做事的人', name: '27'},
+        {prompt:'28.	当别人向我诉说不幸时，我常感到难过', name: '28'},
+        {prompt:'29.	我渴望学习一些新东西，即使它们与我的日常生活无关', name: '29'},
+        {prompt:'30.	别人多认为我是一个热情和友好的人', name: '30'},
+        {prompt:'31.	我常担心有什么不好的事情要发生', name: '31'},
+        {prompt:'32.	在工作上，我常只求能应付过去便可', name: '32'},
+        {prompt:'33.	尽管人类社会存在着一些阴暗的东西（如战争、罪恶、欺诈），我仍然相信人性总的来说是善良的。', name: '33'},
+        {prompt:'34.	我的想象力相当丰富', name: '34'},
+        {prompt:'35.	我喜欢参加社交与娱乐聚会', name: '35'},
+        {prompt:'36.	我很少感到忧郁或沮丧', name: '36'},
+        {prompt:'37.	做事讲究逻辑和条理是我的一个特点', name: '37'},
+        {prompt:'38.	我常为那些遭遇不幸的人感到难过', name: '38'},
+        {prompt:'39.	我很愿意也很容易接受那些新事物、新观点、新想法', name: '39'},
+        {prompt:'40.	我希望成为领导者而不是被领导者', name: '40'},   ],
+    options:['完全不符合','大部分不符合','有点不符合','有点符合','大部分符合','完全符合'], 
+    name:'BF2',
+    required:true}
+    ]
+    ],
+    button_label_finish:'下一页',
+    button_label_back:'上一页',
+    button_label_next:'下一页',
+    required_error_text:"请填写问题"
+    };
+    timeline.push(bf)
+
+    var risc = {
+    type: jsPsychSurvey,
+    pages: [
+    [
+    {type: 'likert-table', 
+    prompt:`下面是一些描述人们心理特点的句子，请根据每个句子与您的相符程度选择相应的选项。`,
+    statements:
+        [ {prompt:'1.	我能适应变化', name: '1'},
+        {prompt:'2.	我有亲密、安全的关系', name: '2'},
+        {prompt:'3.	我对自己的成绩感到骄傲', name: '3'},
+        {prompt:'4.	我努力工作以达到目标', name: '4'},
+        {prompt:'5.	我感觉能掌控自己的生活', name: '5'},
+        {prompt:'6.	我有强烈的目的感', name: '6'},
+        {prompt:'7.	我能看到事情幽默的一面', name: '7'},
+        {prompt:'8.	事情发生总是有原因的', name: '8'},
+        {prompt:'9.	我不得不按照预感行事', name: '9'},
+        {prompt:'10.	我能处理不快乐的情绪', name: '10'},
+        {prompt:'11.	有时，命运或上帝能帮忙', name: '11'},
+        {prompt:'12.	无论发生什么我都能应付', name: '12'},
+        {prompt:'13.	过去的成功让我有信心面对挑战', name: '13'},
+        {prompt:'14.	应对压力使我感到有力量', name: '14'},
+        {prompt:'15.	我喜欢挑战', name: '15'},
+        {prompt:'16.	我能做出不寻常的或艰难的决定', name: '16'},
+        {prompt:'17.	我认为自己是个强有力的人', name: '17'},
+        {prompt:'18.	当事情看起来没什么希望时，我不会轻易放弃', name: '18'},
+        {prompt:'19.	无论结果怎样，我都会尽自己最大努力', name: '19'},
+        {prompt:'20.	我能实现自己的目标', name: '20'},
+        {prompt:'21.	我不会因失败而气馁', name: '21'},
+        {prompt:'22.	经历艰难或疾病后，我往往会很快恢复', name: '22'},
+        {prompt:'23.	我知道去哪里寻求帮助', name: '23'},
+        {prompt:'24.	在压力下，我能够集中注意力并清晰思考', name: '24'},
+        {prompt:'25.	我喜欢在解决问题时起带头作用', name: '25'}  ],
+    options:['从不','很少','有时','经常','几乎所有时候都是这样'],
+    name:'RISC',
+    required:true}
+    ]
+    ],
+    button_label_finish:'下一页',
+    button_label_back:'上一页',
+    button_label_next:'下一页',
+    required_error_text:"请填写问题"
+    };
+    timeline.push(risc)
+
+    var craving = {
+    type: jsPsychSurvey,
+    pages: [
+    [
+    {type: 'likert-table', 
+    prompt:'对于以下每项问题，请选择最符合您成瘾物质使用行为的选项。请以过去七天成瘾物质使用的情形来回答每项问题。',
+    statements:
+        [{prompt:'我根本意识不到我正在使用成瘾物质', name: '1'},
+        {prompt:'我会不自觉得去使用成瘾物质', name: '2'},
+        {prompt:'我注意不到自己用了多少成瘾物质 ', name: '3'},
+        {prompt:'我控制不了自己总是去想那些我正在使用的成瘾物质', name: '4'},
+        {prompt:'即使我自己想要克制自己不用那些成瘾物质，我还是没办法控制自己', name: '5'},
+        {prompt:'我意识不到自己正在用那些成瘾物质', name: '6'},
+        {prompt:'我控制不了自己使用那些成瘾物质', name: '7'},
+        {prompt:'只有在用完了那些成瘾物质后，我才意识到自己做了什么', name: '8'},
+        {prompt:'我会不假思索的使用那些成瘾物质', name: '9'}, 
+        {prompt:'即使我自己不想，我还是会使用那些成瘾物质', name: '10'},
+        {prompt:'当别人给我这些成瘾物质时，我无法抵抗诱惑', name: '11'},
+        {prompt:'我只有事后才意识到我在使用这些成瘾物质', name: '12'},
+        {prompt:'我感觉自己无法自由决定是否使用那些成瘾物质', name: '13'},
+        {prompt:'我计划使用少量成瘾物质时，但最后常常会用超出我预期的量', name: '14'},
+        {prompt:'我并没有很想去用那些成瘾物质，但我还是会用', name: '15'},
+         ],
+      options:['不会','几乎不会','偶尔','频繁','非常频繁','总是如此'],
+      name:'craving',
+      required:true},
+      {type:'text',prompt:'你上次使用这些毒品是几天前?',name:'day',required: true },
+    ]
+    ],
+    button_label_finish:'下一页',
+    button_label_back:'上一页',
+    button_label_next:'下一页',
+    required_error_text:"请填写问题"
+    };
+    timeline.push(craving)
+
+    var scale = ['从不','偶尔','有时','经常','总是'];
+    var affection_1= {
+    type: jsPsychSurveyLikert,
+    preamble:'<p>下列有一连串形容情感的词语。请评估你在最近一周中, <font color=red>理想地想要获得</font>这些情绪体验的频率。</p>',
+    questions:  [
+        {prompt:'兴奋', name: '1',labels:scale,required:true},
+        {prompt:'热情', name: '2',labels:scale,required:true},
+        {prompt:'强壮', name: '3',labels:scale,required:true},
+        {prompt:'快乐', name: '4',labels:scale,required:true},
+        {prompt:'满意', name: '5',labels:scale,required:true},
+        {prompt:'满足', name: '6',labels:scale,required:true},
+        {prompt:'平静 ', name: '7',labels:scale,required:true},
+        {prompt:'休息好 ', name: '8',labels:scale,required:true},
+        {prompt:'放松', name: '9',labels:scale,required:true},
+        {prompt:'平和 ', name: '10',labels:scale,required:true},
+        {prompt:'被动 ', name: '11',labels:scale,required:true},
+        {prompt:'静止 ', name: '12',labels:scale,required:true},
+        {prompt:'安静 ', name: '13',labels:scale,required:true},
+        {prompt:'困倦', name: '14',labels:scale,required:true},
+        {prompt:'无所事事', name: '15',labels:scale,required:true},
+        {prompt:'迟缓', name: '16',labels:scale,required:true},
+        {prompt:'悲伤', name: '17',labels:scale,required:true},
+        {prompt:'孤单', name: '18',labels:scale,required:true},
+        {prompt:'不快乐', name: '19',labels:scale,required:true},
+        {prompt:'紧张 ', name: '20',labels:scale,required:true},
+        {prompt:'敌意 ', name: '21',labels:scale,required:true},
+        {prompt:'害怕 ', name: '22',labels:scale,required:true},
+        {prompt:'震惊', name: '23',labels:scale,required:true},
+        {prompt:'唤醒的', name: '24',labels:scale,required:true},
+        {prompt:'惊讶', name: '25',labels:scale,required:true}
+    ],
+    button_label:'下一页',
+    scale_width: 500
+    };
+    var affection_2 = {
+    type: jsPsychSurveyLikert,
+    preamble:'<p>下列有一连串形容情感的词语。请评估你在最近一周中, <b>实际感受到</b>这些情绪体验的频率。</p>',
+    questions:  [
+        {prompt:'兴奋', name: '1',labels:scale,required:true},
+        {prompt:'热情', name: '2',labels:scale,required:true},
+        {prompt:'强壮', name: '3',labels:scale,required:true},
+        {prompt:'快乐', name: '4',labels:scale,required:true},
+        {prompt:'满意', name: '5',labels:scale,required:true},
+        {prompt:'满足', name: '6',labels:scale,required:true},
+        {prompt:'平静 ', name: '7',labels:scale,required:true},
+        {prompt:'休息好 ', name: '8',labels:scale,required:true},
+        {prompt:'放松', name: '9',labels:scale,required:true},
+        {prompt:'平和 ', name: '10',labels:scale,required:true},
+        {prompt:'被动 ', name: '11',labels:scale,required:true},
+        {prompt:'静止 ', name: '12',labels:scale,required:true},
+        {prompt:'安静 ', name: '13',labels:scale,required:true},
+        {prompt:'困倦', name: '14',labels:scale,required:true},
+        {prompt:'无所事事', name: '15',labels:scale,required:true},
+        {prompt:'迟缓', name: '16',labels:scale,required:true},
+        {prompt:'悲伤', name: '17',labels:scale,required:true},
+        {prompt:'孤单', name: '18',labels:scale,required:true},
+        {prompt:'不快乐', name: '19',labels:scale,required:true},
+        {prompt:'紧张 ', name: '20',labels:scale,required:true},
+        {prompt:'敌意 ', name: '21',labels:scale,required:true},
+        {prompt:'害怕 ', name: '22',labels:scale,required:true},
+        {prompt:'震惊', name: '23',labels:scale,required:true},
+        {prompt:'唤醒的', name: '24',labels:scale,required:true},
+        {prompt:'惊讶', name: '25',labels:scale,required:true}
+    ],
+    button_label:'下一页',
+    scale_width: 500
+    };
+    timeline.push(affection_1)
+    timeline.push(affection_2)
+
+    var ace = {
+    type: jsPsychSurvey,
+    pages: [
+    [
+    {type: 'likert-table', 
+    prompt:`请根据您在人生前18年的经历回答问题。`,
+    statements:
+        [{prompt:'你的父母/监护人了解你的问题和担忧吗？', name: '1'},
+        {prompt:'当你不在学校或工作时，你的父母/监护人真的知道你在空闲时间做什么吗？', name: '2'},
+        {prompt:'你的父母/监护人给你足够食物的频率有多高，即使他们本可以很容易做到？', name: '3'},
+        {prompt:'你的父母/监护人有多少次没有送你去学校，即使在他们有空的时候？', name: '4'}  ],
+    options:['从不','很少','有时','经常','总是'],
+    name:'ACE1',
+    required:true}
+    ],
+    [
+    {type: 'likert-table', 
+    prompt:`请根据您在人生前18年的经历回答问题。`,
+    statements:
+        [{prompt:'你的父母/监护人是否因酗酒或吸毒而无法照顾你？', name: '1'},
+        {prompt:'父母、监护人或其他家庭成员是否对你大喊大叫、尖叫或咒骂，侮辱或羞辱你？', name: '2'},
+        {prompt:'父母、监护人或其他家庭成员是否威胁或实际上抛弃你或将你赶出家门？', name: '3'},
+        {prompt:'父母、监护人或其他家庭成员有没有打你屁股、打你耳光、踢你、或打你？', name: '4'},
+        {prompt:'父母、监护人或其他家庭成员是否用棍子（或手杖）、瓶子、棍棒、刀、鞭子等物品殴打或割伤了你？', name: '5'},
+        {prompt:'当你不想让某人触摸或抚摸你时，他们是否以性的方式触摸或抚摸你？', name: '6'},
+        {prompt:'当你不想让某人用性的方式触摸他们的身体时，他们是否让你用性的方式触摸他们的身体？', name: '7'},
+        {prompt:'当你不想让某人与你进行口交、肛交或阴道性交时，他们是否尝试过？', name: '8'},
+        {prompt:'当你不希望某人与你进行口交、肛交或阴道性交时，他们是否真的与你进行了口交、肛交或阴道性交？', name: '9'},
+        {prompt:'您是否与酗酒或滥用街头或处方药的家庭成员住在一起？', name: '10'},
+        {prompt:'您是否与患有抑郁症、精神病或自杀的家庭成员住在一起？', name: '11'},
+        {prompt:'您是否与曾被送进监狱或监狱的家庭成员住在一起？', name: '12'},
+        {prompt:'你的父母曾经分居或离婚吗？', name: '13'},
+        {prompt:'你的母亲、父亲或监护人是否离世？', name: '14'},
+        {prompt:'您是否看到或听到您家中的父母或家庭成员被吼叫、尖叫、咒骂、侮辱或羞辱？', name: '15'},
+        {prompt:'您是否看到或听到您家中的父母或家庭成员被扇耳光、踢、打或殴打？', name: '16'},
+        {prompt:'您是否看到或听到家中的父母或家庭成员被棍棒（或手杖）、瓶子、棍棒、刀、鞭子等物体击中或割伤。？', name: '17'},
+        {prompt:'你是否被家庭以外的人殴打过？', name: '18'},
+        {prompt:'你在现实生活中看到或听到有人被殴打吗？', name: '19'},
+        {prompt:'你在现实生活中看到或听到有人被刺伤或枪击吗？', name: '20'},
+        {prompt:'在现实生活中，你是否看到或听到有人受到刀或枪的威胁？', name: '21'},
+        {prompt:'你是否因为这些事件而被迫去另一个地方居住？', name: '22'},
+        {prompt:'你是否经历过由于这些事件而故意毁坏您的家？', name: '23'} ],
+    options:['是','否'],
+    name:'ACE2',
+    required:true}
+    ]
+    ],
+    button_label_finish:'下一页',
+    button_label_back:'上一页',
+    button_label_next:'下一页',
+    required_error_text:"请填写问题"
+    };
+timeline.push(ace)
+
+    var tas = {
+    type: jsPsychSurvey,
+    pages: [
+    [
+    {type: 'likert-table', 
+      prompt:`您好，下面是对您日常情绪状况的描述，请您根据自己的真实情况而选择相应的选项。 `,
+      statements:
+          [{prompt:'1.我常常搞不清自己有什么样的内心感受', name: '1'},
+          {prompt:'2.我感到难以用恰当的词语来描述我的内心感受', name: '2'},
+          {prompt:'3.我有一些连医生也不能理解的感觉', name: '3'},
+          {prompt:'4.我能容易描述自己的内心感受', name: '4'},
+          {prompt:'5.我更喜欢分析问题而不只是对问题进行描述', name: '5'},
+          {prompt:'6.当我心理难受时，我不知道究竟是悲伤，害怕，还是愤怒', name: '6'},
+          {prompt:'7.我常常对我身体的一些感受感到莫名其妙', name: '7'},
+          {prompt:'8.我常常只注意到事情的发生，而忽略了其发生的原因', name: '8'},
+          {prompt:'9.我有一些自己难以识别的内心感受', name: '9'},
+          {prompt:'10.知道自己的情绪体验对我来说很重要', name: '10'},
+          {prompt:'11.我难以描述我对别人有何感受', name: '11'},
+          {prompt:'12.人家说我很少谈及自己的内心感受', name: '12'},
+          {prompt:'13.我不知道自己的内心活动', name: '13'},
+          {prompt:'14.我常常不知道我为何愤怒', name: '14'},
+          {prompt:'15.我更愿意与别人谈论他们的日常活动而不是他们的内心感受', name: '15'},
+          {prompt:'16.我宁愿看轻松的娱乐片而不愿看严肃的情节片', name: '16'},
+          {prompt:'17.即使是密友，我也难以表达我内心深处的感受', name: '17'},
+          {prompt:'18.我能感觉到与某人有亲切感，即使在我们沉默寡言之时', name: '18'},
+          {prompt:'19.我觉得反省自己内心的感受对于解决个人问题是有用的', name: '19'},
+          {prompt:'20.寻找电影或戏剧中隐藏的含义会使人从娱乐中分心', name: '20'} ],
+      options:['完全不同意','不同意','中立','同意','完全同意'], 
+      name:'TAS',
+      required:true} 
+    ]
+    ],
+    button_label_finish:'下一页',
+    button_label_back:'上一页',
+    button_label_next:'下一页',
+    required_error_text:"请填写问题"
+    };
+    timeline.push(tas)
+
+    var aas = {
+    type: jsPsychSurvey,
+    pages: [
+    [
+    {type: 'likert-table', 
+    prompt:'以下问题是想了解你的独处经验，独处是指在生活重的某些时刻你的周围没有其他人，或是周围有其他人但是你并没有和他们互动，请你根据自己的实际情况作答。',
+    statements:
+        [{prompt:'远离人群能帮助我好好思索目前面临的问题', name: '1'},
+        {prompt:'独处能让我舒缓压力', name: '2'},
+        {prompt:'独处不能帮我治疗止痛', name: '3'},
+        {prompt:'当我一个人时，我更能好好思考', name: '4'},
+        {prompt:'独处一段时间能让我真正得到内在重生的感受', name: '5'},
+        {prompt:'有时候一个人做事是为了让心情沉淀', name: '6'},
+        {prompt:'独处不能让我把所遭遇的状况弄清楚', name: '7'},
+        {prompt:'有时候远离人群才能消除自己的愤怒和压力', name: '8'},
+        {prompt:'当我心情不好时，独处只会让我觉得更糟', name: '9'},
+        {prompt:'当我面临很大的压力时，我需要有人陪', name: '10'},
+        {prompt:'我喜欢一个人独处', name: '11'},
+        {prompt:'有时候我独处时觉得愉快', name: '12'},
+        {prompt:'当我独处时，我会觉得很空虚', name: '13'},
+        {prompt:'除非有人陪，否则我快乐不起来', name: '14'},
+        {prompt:'我尽量让自己不要落单', name: '15'},
+        {prompt:'独处时无法让我感受到内心平静', name: '16'},
+        {prompt:'如果不能和别人分享我的感受或所参与的活动，那么这些就都毫无意义了', name: '17'},
+        {prompt:'当我自己一个人时，我对自己很满意', name: '18'},
+        {prompt:'当我自己一个人时，我总是能找到事情来做', name: '19'},
+        {prompt:'当我自己一个人时，我觉得内心很平静', name: '20'}  ],
+    options:['非常不符合','不符合','符合','非常符合'],
+    name:'AAS',
+    required:true} 
+    ]
+    ],
+    button_label_finish:'下一页',
+    button_label_back:'上一页',
+    button_label_next:'下一页',
+    required_error_text:"请填写问题"
+    };
+    timeline.push(aas)
+
+    var sps = {
+    type: jsPsychSurvey,
+    pages: [
+    [
+    {type: 'likert-table', 
+    prompt:'以下问题是想了解你的社交偏好，请你结合题目根据自己的实际情况作答。',
+    statements:
+        [{prompt:'和其他人出去玩的时候是我最高兴的时候', name: '1'},
+        {prompt:'当可以选择的时候，我愿意和其他人一起做些事情而不是单独一个人相处。', name: '2'},
+        {prompt:'当可以选择的时候， 我总是愿意一个人待着因为我不喜欢和他人交往。', name: '3'},
+        {prompt:'我喜欢和人们在一起。', name: '4'},
+        {prompt:'有机会的话，我愿意参加社交活动。', name: '5'},
+        {prompt:'我喜欢和他人合作而不是独挑大梁。', name: '6'},
+        {prompt:'我真的不喜欢与他人相处，更愿意独处。', name: '7'},
+        {prompt:'我喜欢和别人一起出去玩，但是他们不愿意和我相处。', name: '8'},
+        {prompt:'我希望能够花更多的时间与他人相处，但是别人并不愿意。', name: '9'},
+        {prompt:'我愿意和他人出去，但是我经常被排斥。', name: '10'},
+        {prompt:'有时候，大家不想和我来往。', name: '11'},
+        {prompt:'有时候我会拒绝别人的邀约，因为我太害羞了。', name: '12'},
+        {prompt:'当我独处时，我会觉得很空虚', name: '13'},
+        {prompt:'其他人玩成一片时，我会站在一旁，并不参与。', name: '14'},
+        {prompt:'我愿意和他人出去玩，但是我有时会紧张。', name: '15'},
+        {prompt:'我比较害羞。', name: '16'},
+        {prompt:'在社交环境中我会感到紧张。', name: '17'},
+        {prompt:'在聚会和一些社交场合，我会感到焦虑。', name: '18'},
+        {prompt:'我不介意独处。', name: '19'},
+        {prompt:'我不喜欢与别人相处，宁愿独处。', name: '20'},
+        {prompt:'我没有与他人相处的强烈愿望。', name: '21'},
+        {prompt:'我不喜欢与别人相处，宁愿独处。', name: '22'},
+        {prompt:'不论独处还是与他人相处，我都一样高兴。', name: '23'}],
+      options:['非常不同意','不太同意','不知道','比较同意','非常同意'], 
+      name:'SPS',
+      required:true}
+    ]
+    ],
+    button_label_finish:'下一页',
+    button_label_back:'上一页',
+    button_label_next:'下一页',
+    required_error_text:"请填写问题"
+    };
+    timeline.push(sps)
+
+    var ress = {
+    type: jsPsychSurvey,
+    pages: [
+    [
+    {type: 'likert-table', 
+    prompt:'以下表述请根据其与自己符合的程度进行作答。',
+    statements:
+        [{prompt:'令人高兴的事情发生时，我会表达自己的愉悦之情', name: '1'},
+        {prompt:'参加聚会时我会尽情表达自己的快乐', name: '2'},
+        {prompt:'预期目标实现时，我会对自己感到满意 ', name: '3'},
+        {prompt:'我会为自己的成功雀跃', name: '4'},
+        {prompt:'受到父母或其他重要人物斥责时，我能够控制自己的消极情绪', name: '5'},
+        {prompt:'当别人故意找我麻烦时，我能够避免恼火', name: '6'},
+        {prompt:'碰到败兴的事情后，我能够很快摆脱恼怒的情绪', name: '7'},
+        {prompt:'当我生气时，我能避免勃然大怒', name: '8'},
+        {prompt:'孤独时我能够让自己远离沮丧', name: '9'},
+        {prompt:'面对尖锐的批评，我能够不气馁', name: '10'},
+        {prompt:'未获应得的赞赏时，我能够减轻心中的失落感', name: '11'},
+        {prompt:'面对困难，我能够不气馁', name: '12'},    ],
+    options:['很不符合','比较不符合','一般','比较符合','非常符合'], 
+    name:'RESS',
+    required:true} 
+    ]
+    ],
+    button_label_finish:'下一页',
+    button_label_back:'上一页',
+    button_label_next:'下一页',
+    required_error_text:"请填写问题"
+    };
+    timeline.push(ress)
+
+    var ces = {
+    type: jsPsychSurvey,
+    pages: [
+    [
+    {type: 'likert-table', 
+    prompt:'请仔细阅读每一条，并根据您最近一周的实际情况，即在最近的一周您的感受如何，选择最适合您的答案',
+    statements:
+        [{prompt:'我感到消沉', name: '1'},
+        {prompt:'我觉得沮丧，就算有家人和朋友帮助也不管用', name: '2'},
+        {prompt:'我感到快乐 ', name: '3'},
+        {prompt:'我提不起劲儿来做事', name: '4'},
+        {prompt:'我生活愉快', name: '5'},
+        {prompt:'我感到悲伤难过', name: '6'},
+        {prompt:'我觉得做每件事都费力', name: '7'},
+        {prompt:'我觉得孤独', name: '8'},
+        {prompt:'我不能集中精力做事', name: '9'},   ],
+    options:['偶尔或无（少于1天）','有时或少许（1～2天）','时常或一半的时间（3～4天）','多数时间或持续（5～7天）'],
+    name:'CES_D',
+    required:true}
+    ]
+    ],
+    button_label_finish:'下一页',
+    button_label_back:'上一页',
+    button_label_next:'下一页',
+    required_error_text:"请填写问题"
+    };
+    timeline.push(ces)
+
+    var gad = {
+    type: jsPsychSurvey,
+    pages: [
+    [
+    {type: 'likert-table', 
+    prompt:'请仔细阅读每一条，并根据您最近一周的实际情况，即在最近的一周您是否存在下列描述的状况和频率，选择最适合您的答案',
+    statements:
+        [{prompt:'感觉紧张，焦虑或愤怒', name: '1'},
+        {prompt:'不能够停止或不能控制的担心', name: '2'},
+        {prompt:'过分担心很多事情 ', name: '3'},
+        {prompt:'难以放松', name: '4'},
+        {prompt:'感觉难以安静下来，坐不住', name: '5'},
+        {prompt:'容易烦恼或被激怒', name: '6'},
+        {prompt:'感到害怕，好像将有可怕的事情会发生', name: '7'},    ],
+    options:['完全不会','好几天','超过一周','几乎每天'],
+    name:'GAD',
+    required:true} 
+    ]
+    ],
+    button_label_finish:'提交',
+    button_label_back:'上一页',
+    button_label_next:'下一页',
+    required_error_text:"请填写问题"
+    };
+    timeline.push(gad)
+
+    jsPsych.run(timeline);
+
+</script>
+</html>

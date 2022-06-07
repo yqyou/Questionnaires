@@ -49813,10 +49813,10 @@ var jsPsychSurvey = (function (jspsych) {
 	         * Text auto complete
 	         */
 	        get: function () {
-	            return this.getPropertyValue("autoComplete", "");
+	            return this.getPropertyValue("autoComplete", "off");
 	        },
 	        set: function (val) {
-	            this.setPropertyValue("autoComplete", val);
+	            this.setPropertyValue("autoComplete", "off");
 	        },
 	        enumerable: false,
 	        configurable: true
